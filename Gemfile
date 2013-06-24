@@ -25,6 +25,10 @@ group :development do
   gem 'rails-footnotes', '>= 3.7.9'
 end
 
+group :production do
+  gem 'pg'
+end
+
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'el_finder'
