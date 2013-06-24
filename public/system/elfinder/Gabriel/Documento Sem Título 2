@@ -1,0 +1,38 @@
+        <%= select :user_type, :type, 
+                   [["#{t('admin')}","Admin"], 
+                   ["#{t('employee_text')}","Employee"],
+                   ["#{t('student_text')}","Student"],
+                   ["#{t('parent')}","Parent"]],
+                   { :prompt => "#{t('select_a_role')}" },
+                   { :onChange => "#{remote_function(:url => {:action => "list_user"},
+                                                    :with => "'user_type='+value",
+                                                    :before => "Element.show('loader')",
+                                                    :success => "Element.hide('loader')"
+                                                    )}" } %>
+                                                    
+                                                    <script>
+   $(document).ready(function(){
+
+    $('#type').change(function(){
+      $.ajax({
+        url: '/list_user',
+        data: 'user_type=' + value,
+        type: 'GET',
+        success: function(data){
+          $('#type').html(data);
+            alert('ok');
+          }
+      })
+    });
+  });
+</script>
+
+        <%= select_tag :user_type, :type, 
+              options_for_select(
+                  [["#{t('admin')}", "Admin"], 
+                   ["#{t('employee_text')}", "Employee"],
+                   ["#{t('student_text')}", "Student"],
+                   ["#{t('parent')}", "Parent"]]),
+              :data => { :remote => true, 
+                         :url => url_for(:controller => "user", 
+                                         :action => "list_user") } %>
